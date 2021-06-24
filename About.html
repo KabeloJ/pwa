@@ -26,27 +26,124 @@
     <meta name="apple-mobile-web-app-status-bar" content="#db4938">
     <meta name="theme-color" content="#db4938">
     <title>Dev'Coffee PWA</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <main>
         <nav>
             <h1>Dev'Coffee</h1>
             <ul>
-                <li><a href="index.html" style="text-decoration:none">Home</a></li>
-                <li><a href="About.html" style="text-decoration:none">About</a></li>
-                <li><a href="https://KabeloJ.github.io/KabeloModiba.github.io" style="text-decoration:none">Blog</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="https://KabeloJ.github.io/KabeloModiba.github.io">Blog</a></li>
             </ul>
         </nav>
-        <div class="card">
-            <div class="card-header">
-                This is the about page
+        <div class="container"></div>
+    </main>
+    <div class="container">
+        <div id="myTable"></div>
+        <br />
+        <h4>Enter New User</h4>
+        <hr />
+        <br />
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>User Id</label>
             </div>
-            <div>
-                <p>This app is used only for testing purposes</p>
-                <a href="https://batray.co.za" class="btn btn-secondary">Form Builder</a>
+            <div class="form-group col-md-6">
+                <input type="number" class="form-control" id="UserId" value="" />
             </div>
         </div>
-    </main>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>Title</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="Title" value="" placeholder="Enter title here." />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>Body</label>
+            </div>
+            <div class="form-group col-md-6">
+                <textarea class="form-control" id="Body" placeholder="Type comment here..."></textarea>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-info float-right" onclick="SubmitAjax()">Submit</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: "https://jsonplaceholder.typicode.com/users",
+                type: "GET",
+                success: function (result) {
+
+                    var ss = result;
+                    if (ss != null) {
+                        var data = "<table class=" + "table" + "><thead><tr>" +
+                            "<th scope='col'>Name</th>" +
+                            "<th scope='col'>username</th>" +
+                            "<th scope='col'>email</th>" +
+                            "<th scope='col'>website</th></tr></thead><tbody>";
+                        if (ss.length != 0) {
+                            for (var i = 0; i < ss.length; i++) {
+                                const theData = ss[i];
+
+                                data += "<tr>" +
+                                    "<td>" + theData.name + "</td>" +
+                                    "<td>" + theData.username + "</td>" +
+                                    "<td>" + theData.email + "</td>" +
+                                    "<td>" + theData.website + "</td>" +
+                                    "<td><button type='button' class=" + "btn btn-info" + " onclick=" + "window.location.href='http://www.w3schools.com'" + ">View</button></td>" +
+                                    "</tr>";
+                            }
+                            data += "</tbody></table>";
+                            $("#myTable").html(data);
+                        }
+                        else {
+
+                            data += "<tr>" +
+                                "<td colspan='4'>No data</td>" +
+                                "</tr>";
+                            data += "</tbody></table>";
+                            $("#myTable").html(data);
+                        }
+                    }
+                    else {
+
+                        $("#myTable").html("Something went wrong trying to load data");
+                    }
+
+                }
+            });
+
+        });
+
+        function SubmitAjax() {
+            var UserId = document.getElementById("UserId").value;
+            var Title = document.getElementById("Title").value;
+            var Body = document.getElementById("Body").value;
+            $.ajax({
+                url: "https://jsonplaceholder.typicode.com/users",
+                type: "POST",
+                data: {
+                    "userId": UserId,
+                    "title": Title,
+                    "body": Body
+                },
+                success: function (result) {
+                    console.log(result);
+                    alert(result.id + " " + result.title);
+                }
+            });
+
+        }
+    </script>
     <script src="js/app.js"></script>
 </body>
 </html>
