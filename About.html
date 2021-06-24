@@ -40,9 +40,8 @@
                 <li><a href="https://KabeloJ.github.io/KabeloModiba.github.io">Blog</a></li>
             </ul>
         </nav>
-        <div class="container"></div>
     </main>
-    <div class="container">
+    <div>
         <div id="myTable"></div>
         <br />
         <h4>Enter New User</h4>
@@ -89,7 +88,6 @@
                             "<th scope='col'>Name</th>" +
                             "<th scope='col'>username</th>" +
                             "<th scope='col'>email</th>" +
-                            "<th scope='col'>website</th></tr></thead><tbody>";
                         if (ss.length != 0) {
                             for (var i = 0; i < ss.length; i++) {
                                 const theData = ss[i];
@@ -98,7 +96,6 @@
                                     "<td>" + theData.name + "</td>" +
                                     "<td>" + theData.username + "</td>" +
                                     "<td>" + theData.email + "</td>" +
-                                    "<td>" + theData.website + "</td>" +
                                     "<td><button type='button' class=" + "btn btn-info" + " onclick=" + "window.location.href='http://www.w3schools.com'" + ">View</button></td>" +
                                     "</tr>";
                             }
